@@ -4,6 +4,5 @@
         "node_modules": true,
         "test": true,
         "lib": true,
-        "yarn.lock": true
     }
 }
