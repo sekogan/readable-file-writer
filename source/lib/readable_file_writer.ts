@@ -65,7 +65,7 @@ export default class ReadableFileWriter extends Stream.Writable
         this.fileWriter.write(chunk, _encoding, (error?: Error) => {
             if (error)
                 this.handleError(error);
-            cb(this.error);
+            cb();
             this.emit('_awakeReaders');
         });
         this.emit('_awakeReaders');
@@ -79,7 +79,7 @@ export default class ReadableFileWriter extends Stream.Writable
         this.fileWriter.end((error?: Error) => {
             if (error)
                 this.handleError(error);
-            cb(this.error);
+            cb();
             this.emit('_awakeReaders');
         });
         this.emit('_awakeReaders');
@@ -94,7 +94,7 @@ export default class ReadableFileWriter extends Stream.Writable
         this.fileWriter.destroy(error);
         if (error)
             this.handleError(error);
-        this.fileWriter.once('close', () => cb(this.error));
+        cb();
     }
 
     private handleError(error: Error): void
