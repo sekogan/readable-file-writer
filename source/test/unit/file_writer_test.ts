@@ -121,7 +121,6 @@ for (const testCase of TestCases)
 
         it('should emit error if file cannot be closed', done => {
             const sut = createSut(AFileName);
-            sut.on('error', () => {});
             sut.on('open', fd => {
                 sut.write(Buffer.from('abc'), (error?: Error) => {
                     assert(!error);
