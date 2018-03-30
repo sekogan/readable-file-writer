@@ -14,6 +14,13 @@ export interface Options
     fileReaderHighWaterMark: number;
 }
 
+const enum State
+{
+    Created,
+    Ended,
+    Destroyed,
+}
+
 export default class ReadableFileWriter extends Stream.Writable
 {
     private fileWriter = Fs.createWriteStream(this.path, {
@@ -21,7 +28,7 @@ export default class ReadableFileWriter extends Stream.Writable
         encoding: undefined,
     });
     private error: Error|undefined;
-    private ended = false;
+    private state = State.Created;
     private buffer = new BufferedChunks(this.options.bufferSize || Defaults.bufferSize);
 
     constructor(
@@ -60,11 +67,9 @@ export default class ReadableFileWriter extends Stream.Writable
     ): any
     {
         if (this.error)
-            return cb(this.error);
+            return cb();
         this.buffer.push(chunk);
-        this.fileWriter.write(chunk, _encoding, (error?: Error) => {
-            if (error)
-                this.handleError(error);
+        this.fileWriter.write(chunk, _encoding, (_error?: Error) => {
             cb();
             this.emit('_awakeReaders');
         });
@@ -75,10 +80,10 @@ export default class ReadableFileWriter extends Stream.Writable
         cb: (error?: Error) => void
     ): void
     {
-        this.ended = true;
-        this.fileWriter.end((error?: Error) => {
-            if (error)
-                this.handleError(error);
+        if (this.error)
+            return cb();
+        this.state = State.Ended;
+        this.fileWriter.end((_error?: Error) => {
             cb();
             this.emit('_awakeReaders');
         });
@@ -90,10 +95,14 @@ export default class ReadableFileWriter extends Stream.Writable
         cb: (error?: Error) => void
     )
     {
-        this.ended = true;
-        this.fileWriter.destroy(error);
         if (error)
             this.handleError(error);
+        if (!this.error)
+        {
+            this.fileWriter.destroy();
+            this.state = State.Destroyed;
+            this.emit('_awakeReaders');
+        }
         cb();
     }
 
@@ -102,6 +111,8 @@ export default class ReadableFileWriter extends Stream.Writable
         if (this.error)
             return;
         this.error = error;
+        this.fileWriter.destroy();
+        this.state = State.Destroyed;
         this.emit('error', error);
         this.emit('_awakeReaders');
     }
@@ -123,7 +134,7 @@ export default class ReadableFileWriter extends Stream.Writable
         // No more data for reader?
         if (reader.bytesAdded === this.buffer.end)
         {
-            if (this.ended)
+            if (this.state === State.Ended || this.state === State.Destroyed)
                 return reader.push(null, null);
             reader.needMoreData = true;
             return;
