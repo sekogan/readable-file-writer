@@ -68,6 +68,25 @@ describe('reading', () => {
         assert.equal(data, 'abcdef');
     })
 
+    it('should copy data to reader if some data got out of the memory buffer', async () => {
+        const sut = new ReadableFileWriter(AFileName, { bufferSize: 5 });
+        const source = StreamHelpers.createReadable();
+        const dataWrittenPromise = pump(source, sut);
+
+        source.push('DATA1');
+        source.push('DATA2');
+        source.push('DATA3');
+        await delay(10);
+
+        const reader = sut.createReadStream();
+
+        source.push(null);
+        await dataWrittenPromise;
+
+        const data = await StreamHelpers.pumpToString(reader);
+        assert.equal(data, 'DATA1DATA2DATA3');
+    })
+
     it('should copy data to reader if reader created when file is finished', async () => {
         const sut = new ReadableFileWriter(AFileName);
         const source = StreamHelpers.readableFrom('abc');
