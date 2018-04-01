@@ -20,14 +20,15 @@
     "url": "git://github.com/sekogan/readable-file-writer.git"
   },
   "main": "./lib/readable_file_writer.js",
-  "typings": "./lib/readable_file_writer.d.ts",
+  "types": "./lib/readable_file_writer.d.ts",
   "scripts": {
+    "prepare": "yarn build",
     "build": "tsc",
-    "test": "tsc && mocha test/unit",
-    "test_all": "tsc && mocha test/unit test/slow",
+    "test": "yarn build && mocha test/unit",
+    "test_all": "yarn build && mocha test/unit test/slow",
     "coverage": "nyc mocha --require ts-node/register --require source-map-support/register test/unit",
     "coveralls": "yarn run coverage && nyc report --reporter=text-lcov | coveralls",
-    "clean": "rimraf lib test coverage .nyc_output yarn-error.log",
+    "clean": "rimraf lib test coverage .nyc_output yarn-error.log *.tgz",
     "clean_all": "yarn run clean && rimraf node_modules"
   },
   "engines": {
