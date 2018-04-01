@@ -8,6 +8,10 @@
   dependencies:
     "@types/node" "*"
 
+"@types/heapdump@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@types/heapdump/-/heapdump-0.3.0.tgz#9ea9532a79e3bed4ab4480e527328fd16187dc42"
+
 "@types/mocha@^2.2.48":
   version "2.2.48"
   resolved "https://registry.yarnpkg.com/@types/mocha/-/mocha-2.2.48.tgz#3523b126a0b049482e1c3c11877460f76622ffab"
@@ -931,6 +935,10 @@ hawk@~6.0.2:
 he@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/he/-/he-1.1.1.tgz#93410fd21b009735151f8868c2f271f3427e23fd"
+
+heapdump@^0.3.9:
+  version "0.3.9"
+  resolved "https://registry.yarnpkg.com/heapdump/-/heapdump-0.3.9.tgz#03c74eb0df5d67be0982e83429ba9c9d2b3b7f78"
 
 hoek@4.x.x:
   version "4.2.1"
