@@ -1,5 +1,5 @@
-import * as WorkingDir from '../helpers/working_dir';
-import * as Tests from './tests';
+import Tests = require('./tests');
+import WorkingDir = require('../helpers/working_dir');
 import Heapdump = require('heapdump');
 
 async function main()

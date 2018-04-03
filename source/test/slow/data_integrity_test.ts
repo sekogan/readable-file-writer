@@ -1,11 +1,11 @@
-import ReadableFileWriter from '../../lib/readable_file_writer';
-import * as WorkingDir from '../helpers/working_dir';
-import * as StreamHelpers from '../helpers/streams';
-import pump from '../helpers/async_pump';
-import * as Generatorics from 'generatorics';
-import * as Fs from 'fs-extra';
-import * as Path from 'path';
-import * as assert from 'assert';
+import { ReadableFileWriter } from '../../lib/readable_file_writer';
+import StreamHelpers = require('../helpers/streams');
+import WorkingDir = require('../helpers/working_dir');
+import { asyncPump as pump } from '../helpers/async_pump';
+import Generatorics = require('generatorics');
+import Path = require('path');
+import Fs = require('fs');
+import assert = require('assert');
 
 const AFileName = Path.join(WorkingDir.path, 'foo');
 const TestStreamSize = 1*1000*1000 + 5669;

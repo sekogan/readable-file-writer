@@ -1,9 +1,9 @@
-import ReadableFileWriter from '../../lib/readable_file_writer';
-import * as StreamHelpers from '../helpers/streams';
-import * as WorkingDir from '../helpers/working_dir';
-import pump from '../helpers/async_pump';
-import * as Path from 'path';
-import * as Fs from 'fs';
+import { ReadableFileWriter } from '../../lib/readable_file_writer';
+import StreamHelpers = require('../helpers/streams');
+import WorkingDir = require('../helpers/working_dir');
+import { asyncPump as pump } from '../helpers/async_pump';
+import Path = require('path');
+import Fs = require('fs');
 
 export const AFileName = Path.join(WorkingDir.path, 'foo');
 export const TestStreamSize = 1*1024*1024*1024;

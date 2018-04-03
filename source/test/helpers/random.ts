@@ -1,5 +1,5 @@
 import Crypto = require('crypto');
-import * as Util from 'util';
+import Util = require('util');
 
 export async function generateChunks(
     number: number, size: number

@@ -1,6 +1,6 @@
 import pump = require('pump');
 
-export default async function asyncPump(
+export async function asyncPump(
     ...streams: Array<NodeJS.ReadableStream|NodeJS.WritableStream>
     ): Promise<void>
 {

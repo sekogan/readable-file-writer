@@ -1,4 +1,4 @@
-export default class BufferedChunks
+export class BufferedChunks
 {
     private _start: number = 0;
     private _end: number = 0;

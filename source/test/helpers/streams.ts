@@ -1,6 +1,6 @@
-import * as Random from './random';
-import pump from './async_pump';
-import * as Stream from 'readable-stream';
+import Random = require('./random');
+import { asyncPump as pump } from './async_pump';
+import Stream = require('readable-stream');
 import Crypto = require('crypto');
 
 export const Delays = {

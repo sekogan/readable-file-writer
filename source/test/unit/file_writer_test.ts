@@ -1,8 +1,8 @@
-import ReadableFileWriter from '../../lib/readable_file_writer';
-import * as WorkingDir from '../helpers/working_dir';
-import * as Stream from 'readable-stream';
-import * as Fs from 'fs-extra';
-import * as Path from 'path';
+import { ReadableFileWriter } from '../../lib/readable_file_writer';
+import WorkingDir = require('../helpers/working_dir');
+import Stream = require('readable-stream');
+import Path = require('path');
+import Fs = require('fs');
 import assert = require('assert');
 
 const AFileName = Path.join(WorkingDir.path, 'foo');

@@ -1,7 +1,7 @@
-import BufferedChunks from './buffered_chunks';
+import { BufferedChunks } from './buffered_chunks';
 import Multistream = require('multistream');
-import * as Stream from 'readable-stream';
-import * as Fs from 'fs';
+import Stream = require('readable-stream');
+import Fs = require('fs');
 
 const Defaults: Options = {
     bufferSize: 1*1024*1024,
@@ -21,7 +21,7 @@ const enum State
     Destroyed,
 }
 
-export default class ReadableFileWriter extends Stream.Writable
+export class ReadableFileWriter extends Stream.Writable
 {
     private fileWriter = Fs.createWriteStream(this.path, {
         flags: 'w',

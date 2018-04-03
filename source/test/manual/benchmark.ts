@@ -1,5 +1,5 @@
-import * as Tests from './tests';
-import * as WorkingDir from '../helpers/working_dir';
+import Tests = require('./tests');
+import WorkingDir = require('../helpers/working_dir');
 
 async function main()
 {

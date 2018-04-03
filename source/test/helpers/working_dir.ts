@@ -1,6 +1,6 @@
-import * as Fs from 'fs-extra';
-import * as Path from 'path';
-import * as OS from 'os';
+import Fs = require('fs-extra');
+import Path = require('path');
+import OS = require('os');
 
 export const path = Path.join(OS.tmpdir(),
     Path.basename(Path.normalize(Path.join(__dirname, '..', '..')))
