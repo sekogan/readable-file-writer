@@ -3,15 +3,22 @@ import Multistream = require('multistream');
 import Stream = require('readable-stream');
 import Fs = require('fs');
 
-const Defaults: Options = {
+const DefaultOptions: Options = {
     bufferSize: 1*1024*1024,
-    fileReaderHighWaterMark: 128*1024,
 }
 
 export interface Options
 {
     bufferSize: number;
-    fileReaderHighWaterMark: number;
+}
+
+const DefaultFileReadStreamOptions = {
+    highWaterMark: 128*1024,
+}
+
+export interface FileReadStreamOptions
+{
+    highWaterMark: number;
 }
 
 const enum State
@@ -29,11 +36,11 @@ export class ReadableFileWriter extends Stream.Writable
     });
     private error: Error|undefined;
     private state = State.Created;
-    private buffer = new BufferedChunks(this.options.bufferSize || Defaults.bufferSize);
+    private buffer = new BufferedChunks(this.options.bufferSize);
 
     constructor(
         public readonly path: string,
-        private readonly options: Partial<Options> = {}
+        private readonly options = DefaultOptions
     )
     {
         super();
@@ -42,9 +49,12 @@ export class ReadableFileWriter extends Stream.Writable
         this.fileWriter.on('error', error => this.handleError(error));
     }
 
-    createReadStream(): NodeJS.ReadableStream
+    createReadStream(
+        options = DefaultFileReadStreamOptions
+    ): NodeJS.ReadableStream
     {
         const reader: Reader = {
+            options,
             bytesAdded: 0,
             needMoreData: false,
             push: null,
@@ -163,7 +173,7 @@ export class ReadableFileWriter extends Stream.Writable
             encoding: undefined,
             start,
             end: end - 1, // end is inclusive
-            highWaterMark: this.options.fileReaderHighWaterMark,
+            ...reader.options
         }));
     }
 }
@@ -185,6 +195,7 @@ interface MultistreamCallback
 
 interface Reader
 {
+    readonly options: FileReadStreamOptions;
     bytesAdded: number;
     needMoreData: boolean;
     push: MultistreamCallback|null;
