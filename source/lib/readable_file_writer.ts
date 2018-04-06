@@ -12,11 +12,11 @@ export interface Options
     bufferSize: number;
 }
 
-const DefaultFileReadStreamOptions = {
+const DefaultReadStreamOptions = {
     highWaterMark: 128*1024,
 }
 
-export interface FileReadStreamOptions
+export interface ReadStreamOptions
 {
     highWaterMark: number;
 }
@@ -50,7 +50,7 @@ export class ReadableFileWriter extends Stream.Writable
     }
 
     createReadStream(
-        options = DefaultFileReadStreamOptions
+        options = DefaultReadStreamOptions
     ): NodeJS.ReadableStream
     {
         const reader: Reader = {
@@ -195,7 +195,7 @@ interface MultistreamCallback
 
 interface Reader
 {
-    readonly options: FileReadStreamOptions;
+    readonly options: ReadStreamOptions;
     bytesAdded: number;
     needMoreData: boolean;
     push: MultistreamCallback|null;
