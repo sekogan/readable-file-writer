@@ -36,7 +36,6 @@ export interface ReadStreamOptions
     highWaterMark: number;
 }
 
-
 class ReadableFileWriter extends stream.Writable
 {
     constructor(
@@ -98,14 +97,12 @@ An additional installation step is required if your project is written in Typesc
 - **Option 1**: install typings using npm or yarn. There is no standard `@types/readable-stream` right now but it may be added in the future;
 - **Option 2**: manually add typings from this module to your `tsconfig.json`:
 
-    ```
+    ```json
     "include": [
-        ...
         "./node_modules/readable-file-writer/types/readable-stream.d.ts"
     ]
     ```
 
 ---
-
 Copyright &copy; 2018 Sergei Kogan.
 Licensed under [The MIT license](LICENSE).
