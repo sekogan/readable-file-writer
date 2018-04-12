@@ -67,7 +67,7 @@ Readers always try to read from the memory buffer first. If the memory buffer is
 
 ### ReadableFileWriter.createReadStream
 
-Creates a readable stream. Readable streams can be created and used at any time, even if the writing pipeline is finished and the instance of ReadableFileWriter is destroyed.
+Creates a readable stream. Readable streams can be created and used at any time, even if the writing pipeline is finished and the instance of ReadableFileWriter is destroyed. All readers get the file's data from the very beginning, no matter when they were created.
 
 Any number of readable streams can be created.
 
